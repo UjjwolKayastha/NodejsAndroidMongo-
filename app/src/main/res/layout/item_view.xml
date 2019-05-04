@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    android:background="@drawable/backdesign"
     >
 
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/noimage"
+        android:src="@drawable/ic_launcher_background"
         android:id="@+id/imgview"
         android:layout_margin="10dp"
         android:layout_marginTop="50dp"/>
 
     <TextView
+        style="@style/TextandLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Item's Name"
@@ -25,24 +27,28 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/imgview" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Item's Price"
-        android:id="@+id/price"
-        android:layout_toEndOf="@+id/imgview"
-        android:layout_below="@+id/name"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/imgview" />
+
 
     <TextView
+        style="@style/TextandLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Item's Description"
         android:id="@+id/description"
         android:layout_toEndOf="@+id/imgview"
         android:layout_below="@id/price"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/imgview" />
+
+    <TextView
+        style="@style/TextandLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Item's Price"
+        android:id="@+id/price"
+        android:layout_toEndOf="@+id/imgview"
+        android:layout_below="@+id/name"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/imgview" />
