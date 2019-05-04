@@ -78,12 +78,12 @@ public class LoginFragment extends Fragment {
                 Log.d("val", email+pass);
 
                 if(inEmail.getText().toString().equals(email) && inPassword.getText().toString().equals(pass) ){
-                    Toast.makeText(getActivity(), "LOGIN SUCCESS", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "LOGGED IN SUCCESSFULLY", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), Dashboard.class);
                     startActivity(intent);
                 }else
                 {
-                    Toast.makeText(getActivity(), "LOGIN FAILED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "INVALID USERNAME OR PASSWORD", Toast.LENGTH_SHORT).show();
                 }
 
 
