@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatViewInflater;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,17 +125,23 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
     private void signUp(){
 
+        if (nullValidation()) {
+            preferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+            SharedPreferences.Editor mEditor = preferences.edit();
+            mEditor.putString("regName", name.getText().toString());
+            mEditor.putString("regEmail", email.getText().toString());
+            mEditor.putString("regPassword", password.getText().toString());
 
-        preferences= getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences.Editor mEditor = preferences.edit();
-        mEditor.putString("regName", name.getText().toString());
-        mEditor.putString("regEmail", email.getText().toString());
-        mEditor.putString("regPassword", password.getText().toString());
+            mEditor.commit();
+//          mEditor.apply();
 
-        mEditor.commit();
-//        mEditor.apply();
+            Toast.makeText(getActivity(), "REGISTRATION SUCCESSFUL", Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(getActivity(),"REGISTRATION SUCCESSFUL", Toast.LENGTH_SHORT).show();
+            name.setText("");
+            email.setText("");
+            password.setText("");
+
+        }
     }
     /**
      * This interface must be implemented by activities that contain this
@@ -148,5 +156,22 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public boolean nullValidation(){
+        if (TextUtils.isEmpty(name.getText().toString())){
+            name.setError("Required Field");
+            return false;
+        }
+        else if (TextUtils.isEmpty(email.getText().toString())){
+            email.setError("Required Field");
+            return false;
+        }
+        else if (TextUtils.isEmpty(password.getText().toString())){
+            password.setError("Required Field");
+            return false;
+        }
+
+        return true;
     }
 }

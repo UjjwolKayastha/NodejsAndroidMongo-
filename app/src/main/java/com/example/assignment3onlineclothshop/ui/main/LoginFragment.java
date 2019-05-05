@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.arch.lifecycle.ViewModelProviders;
 import android.widget.Toast;
 
-//import com.example.assignment3onlineclothshop.Dashboard;
 import com.example.assignment3onlineclothshop.R;
 
 /**
