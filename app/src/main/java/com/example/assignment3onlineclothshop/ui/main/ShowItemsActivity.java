@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Toast;
 
 import com.example.assignment3onlineclothshop.Adapter.ItemAdapter;
 import com.example.assignment3onlineclothshop.R;
+import com.example.assignment3onlineclothshop.interfaces.ItemInterface;
 import com.example.assignment3onlineclothshop.models.Item;
 
 import java.io.BufferedReader;
@@ -21,6 +23,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ShowItemsActivity extends AppCompatActivity {
 
@@ -43,22 +51,34 @@ public class ShowItemsActivity extends AppCompatActivity {
        }
 
     private void readItems() {
-        try {
-            FileInputStream fos=openFileInput("items.txt");
-            InputStreamReader isr=new InputStreamReader(fos);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:4000/items/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-            BufferedReader br=new BufferedReader(isr);
-            String line="";
+        ItemInterface itemApi = retrofit.create(ItemInterface.class);
 
-            while ((line = br.readLine()) != null){
-                String[] parts = line.split("->");
-                String imgDrawagble =parts[2];
-                int id=getResources().getIdentifier(imgDrawagble,"drawable",getPackageName());
-//                itemsList.add(new Item(parts[0],parts[1],parts[2],parts[3],id));
+        Call<List<Item>> listCall = itemApi.getAllItems();
+
+        listCall.enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Item> itemModelList = response.body();
+
+                recyclerView.setAdapter(new ItemAdapter(getApplicationContext(), itemModelList));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

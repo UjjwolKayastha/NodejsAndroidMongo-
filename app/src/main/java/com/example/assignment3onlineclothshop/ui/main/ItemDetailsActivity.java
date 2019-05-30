@@ -6,6 +6,7 @@ import android.transition.CircularPropagation;
 import android.widget.TextView;
 
 import com.example.assignment3onlineclothshop.R;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -27,11 +28,11 @@ public class ItemDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null){
-            circleImageView.setImageResource(bundle.getInt("image"));
+            String image = bundle.getString("image");
+            Picasso.with(this).load("http://10.0.2.2:4000/uploads/" + image).into(circleImageView);
             name.setText(bundle.getString("name"));
             price.setText(bundle.getString("price"));
             description.setText(bundle.getString("description"));
-
         }
     }
 }

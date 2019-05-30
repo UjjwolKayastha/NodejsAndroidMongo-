@@ -13,7 +13,8 @@ router.route('/')
                 res.json(items);
             }, (err) => next(err))
             .catch((err) => next(err));
-    })
+    }) 
+  
     .post((req, res, next) => {
         items.create(req.body)
             .then((item) => {
@@ -24,13 +25,24 @@ router.route('/')
             .catch((err) => next(err));
     });
 
-router.route('/:id')
+router.route('names')
     .get((req, res, next) => {
-        items.findById(req.params.id)
+        items.findById(req.params.name)
             .then((item) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(item);
+            }, (err) => next(err))
+            .catch((err) => next(err));
+    })
+
+    router.route('images')
+    .get((req, res, next) => {
+        items.findById(req.params.name)
+            .then((item) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.sendFile(item);
             }, (err) => next(err))
             .catch((err) => next(err));
     })

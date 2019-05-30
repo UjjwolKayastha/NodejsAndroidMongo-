@@ -61,7 +61,6 @@ public class AddItemActivity extends AppCompatActivity {
 
     public  String BASE_URL = "http://10.0.2.2:4000/";
     
-    String imagePath;
 
 
     @Override
@@ -89,6 +88,7 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addImage(bitmap);
+                Toast.makeText(AddItemActivity.this, "Image Confirmed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -176,10 +176,6 @@ public class AddItemActivity extends AppCompatActivity {
 
 
 
-
-
-
-
     public void addItem(){
         if (nullValidation()) {
 
@@ -211,6 +207,8 @@ public class AddItemActivity extends AppCompatActivity {
                         name.setText("");
                         price.setText("");
                         description.setText("");
+                        imagename.setText("");
+                        imageView.setImageResource(R.drawable.noimage);
                     }else {
                         try{
                             Log.d("VAL", response.toString());
