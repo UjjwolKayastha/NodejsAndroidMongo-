@@ -17,7 +17,7 @@ const connect = mongoose.connect(url, {
 });
 
 connect.then((db) => {
-    console.log("Connected to mongodb server");
+    console.log("Connected to Database. Server running on port: 4000");
 }, (err) => { console.log(err); });
 
 var indexRouter = require('./routes/index');

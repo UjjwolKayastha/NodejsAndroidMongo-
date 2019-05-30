@@ -204,11 +204,12 @@ public class AddItemActivity extends AppCompatActivity {
 
                         Log.d("VAL", "success response ");
 
-                        name.setText("");
-                        price.setText("");
-                        description.setText("");
-                        imagename.setText("");
-                        imageView.setImageResource(R.drawable.noimage);
+//                        name.setText("");
+//                        price.setText("");
+//                        description.setText("");
+//                        imagename.setText("");
+//                        imageView.setImageResource(R.drawable.noimage);
+                        startActivity(new Intent(getApplicationContext(), ShowItemsActivity.class));
                     }else {
                         try{
                             Log.d("VAL", response.toString());

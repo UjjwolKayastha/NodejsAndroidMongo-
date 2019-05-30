@@ -31,8 +31,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
             String image = bundle.getString("image");
             Picasso.with(this).load("http://10.0.2.2:4000/uploads/" + image).into(circleImageView);
             name.setText(bundle.getString("name"));
-            price.setText(bundle.getString("price"));
-            description.setText(bundle.getString("description"));
+            price.setText(bundle.getString("description"));
+            description.setText(bundle.getString("price"));
         }
     }
 }
