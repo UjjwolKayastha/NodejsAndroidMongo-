@@ -35,13 +35,35 @@
         android:id="@+id/itemPrice"
         android:hint="Enter your Item's Price"
         />
-    <EditText
-        style="@style/TextandLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/itemImageName"
-        android:hint="Enter your Item's Image Name"
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/noimage"
+        android:scaleType="centerInside"
         />
+    <TextView
+        style="@style/TextandLayout"
+        android:hint="Image Name"
+        android:textSize="20dp"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        android:id="@+id/tvImagename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:background="@drawable/backdesign"
+        style="@style/TextandLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="CONFIRM"/>
+
+
     <EditText
 
         android:layout_width="match_parent"
@@ -51,6 +73,7 @@
 
         android:hint="Enter your Item's Description"
         />
+
 
     <Button
         android:id="@+id/btnAddItem"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatViewInflater;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.assignment3onlineclothshop.R;
+import com.example.assignment3onlineclothshop.interfaces.UserInterface;
+import com.example.assignment3onlineclothshop.models.User;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,10 +41,10 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    EditText name, email, password;
+    EditText fname, lname, username, password;
     Button signup;
-    SharedPreferences preferences;
-
+//    SharedPreferences preferences;
+    public  String BASE_URL = "http://10.0.2.2:4000/";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -79,8 +89,9 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_registration, container, false);
 
-        name = root.findViewById(R.id.regUsername);
-        email = root.findViewById(R.id.regEmail);
+        fname = root.findViewById(R.id.regFirstname);
+        lname = root.findViewById(R.id.regLastname);
+        username = root.findViewById(R.id.regEmail);
         password = root.findViewById(R.id.regPassword);
 
 
@@ -125,21 +136,51 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
     private void signUp(){
 
+        Log.d("VAL", "BTNCLICKED ");
+
         if (nullValidation()) {
-            preferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-            SharedPreferences.Editor mEditor = preferences.edit();
-            mEditor.putString("regName", name.getText().toString());
-            mEditor.putString("regEmail", email.getText().toString());
-            mEditor.putString("regPassword", password.getText().toString());
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            UserInterface userInterface = retrofit.create(UserInterface.class);
+            final User user = new User(fname.getText().toString().trim(), lname.getText().toString().trim(), username.getText().toString().trim(), password.getText().toString().trim());
+            Call<ResponseBody> call = userInterface.userRegistration(user);
 
-            mEditor.commit();
-//          mEditor.apply();
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-            Toast.makeText(getActivity(), "REGISTRATION SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    Log.d("VAL", "success ");
 
-            name.setText("");
-            email.setText("");
-            password.setText("");
+                    if(response.isSuccessful()) {
+                        Toast.makeText(getActivity(), "REGISTRATION SUCCESSFUL", Toast.LENGTH_SHORT).show();
+
+                        Log.d("VAL", "success response ");
+
+                        fname.setText("");
+                        lname.setText("");
+                        username.setText("");
+                        password.setText("");
+                    }else {
+                        try{
+                            Log.d("VAL", response.toString());
+
+                            Toast.makeText(getActivity(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    Log.d("VAL", t.getLocalizedMessage());
+
+                }
+            });
+
 
         }
     }
@@ -159,12 +200,16 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     }
 
     public boolean nullValidation(){
-        if (TextUtils.isEmpty(name.getText().toString())){
-            name.setError("Required Field");
+        if (TextUtils.isEmpty(fname.getText().toString())){
+            fname.setError("Required Field");
             return false;
         }
-        else if (TextUtils.isEmpty(email.getText().toString())){
-            email.setError("Required Field");
+        else if (TextUtils.isEmpty(lname.getText().toString())){
+            lname.setError("Required Field");
+            return false;
+        }
+        else if (TextUtils.isEmpty(username.getText().toString())){
+            username.setError("Required Field");
             return false;
         }
         else if (TextUtils.isEmpty(password.getText().toString())){

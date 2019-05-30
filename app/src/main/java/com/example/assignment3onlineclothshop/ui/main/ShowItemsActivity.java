@@ -54,7 +54,7 @@ public class ShowItemsActivity extends AppCompatActivity {
                 String[] parts = line.split("->");
                 String imgDrawagble =parts[2];
                 int id=getResources().getIdentifier(imgDrawagble,"drawable",getPackageName());
-                itemsList.add(new Item(parts[0],parts[1],parts[2],parts[3],id));
+//                itemsList.add(new Item(parts[0],parts[1],parts[2],parts[3],id));
             }
         } catch (IOException e) {
             e.printStackTrace();

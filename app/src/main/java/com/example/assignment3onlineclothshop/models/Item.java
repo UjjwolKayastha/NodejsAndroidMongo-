@@ -1,16 +1,23 @@
 package com.example.assignment3onlineclothshop.models;
 
 public class Item {
-    String itemName, itemDescription, imageName, itemPrice;
-    int imgId;
+    String _id, itemName, itemDescription, itemImageName, itemPrice;
 
 
-    public Item(String itemName, String itemDescription, String imageName, String itemPrice, int imgId) {
+    public Item( String itemName, String itemDescription, String itemImageName, String itemPrice) {
+
         this.itemName = itemName;
         this.itemDescription = itemDescription;
-        this.imageName = imageName;
+        this.itemImageName = itemImageName;
         this.itemPrice = itemPrice;
-        this.imgId = imgId;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getItemName() {
@@ -29,12 +36,12 @@ public class Item {
         this.itemDescription = itemDescription;
     }
 
-    public String getImageName() {
-        return imageName;
+    public String getItemImageName() {
+        return itemImageName;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setItemImageName(String itemImageName) {
+        this.itemImageName = itemImageName;
     }
 
     public String getItemPrice() {
@@ -45,11 +52,15 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public int getImgId() {
-        return imgId;
-    }
 
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
+    @Override
+    public String toString() {
+        return "Item{" +
+                "_id='" + _id + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", itemDescription='" + itemDescription + '\'' +
+                ", itemImageName='" + itemImageName + '\'' +
+                ", itemPrice='" + itemPrice + '\'' +
+                '}';
     }
 }
